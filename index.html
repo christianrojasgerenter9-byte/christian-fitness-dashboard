@@ -1,288 +1,462 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Christian Fitness Dashboard</title>
-
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Christian Fitness Dashboard</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="topbar">
+    <div>
+      <h1>💪 Christian Fitness Dashboard</h1>
+      <p id="estado-guardado">Sin sincronizar</p>
+    </div>
 
-<footer>
-    © 2026 Christian Rojas Fitness Dashboard™
-    <br>
-    Todos los derechos reservados.
-</footer>
+    <div class="actions">
+      <button class="save-btn" onclick="guardarEntrenamiento()">💾 Guardar Entrenamiento</button>
+      <button class="secondary-btn" onclick="exportarCSV()">📄 Exportar CSV</button>
+      <button class="danger-btn" onclick="limpiarRegistros()">🗑️ Limpiar historial local</button>
+    </div>
+  </div>
 
-    <h1>💪 Christian Fitness Dashboard</h1>
-
-    <div class="card">
+  <div class="card">
     <h2>Información General</h2>
-
     <div class="stats-grid">
+      <div class="stat-box">
+        <label for="fechaInicio">Fecha de inicio</label>
+        <input type="date" id="fechaInicio" value="2026-06-04">
+      </div>
 
-    <div class="stat-box">
-        <h3>04/06/2026</h3>
-        <p>Fecha de Inicio</p>
+      <div class="stat-box">
+        <label for="objetivoActual">Objetivo actual</label>
+        <input type="text" id="objetivoActual" value="Volumen Muscular">
+      </div>
 
+      <div class="stat-box">
+        <label for="pesoActual">Peso actual (kg)</label>
+        <input type="number" id="pesoActual" value="84" step="0.1">
+      </div>
 
-    <div class="stat-box">
-        <h3>Muscular</h3>
-        <p>Objetivo</p>
+      <div class="stat-box">
+        <label for="pesoMeta">Meta (kg)</label>
+        <input type="number" id="pesoMeta" value="95" step="0.1">
+      </div>
     </div>
+  </div>
 
-    <div class="stat-box">
-        <h3>87.5 KG</h3>
-        <p>Peso Actual</p>
-    </div>
-    </div>
-</div>
-<div class="card">
-    <h2>🥗 Plan de Alimentación</h2>
-
+  <div class="card">
+    <h2>🍽️ Nutrición del Día</h2>
     <div class="stats-grid">
+      <div class="stat-box">
+        <label for="foodInput">Alimento</label>
+        <input type="text" id="foodInput" placeholder="Ej: huevo, pollo, avena">
 
-        <div class="stat-box">
-            <h3>🍳 Desayuno</h3>
-            <p>4 Huevos + 100g Avena + 1 Plátano</p>
-        </div>
+        <label for="foodCalories">Calorías</label>
+        <input type="number" id="foodCalories" placeholder="Ej: 150">
 
-        <div class="stat-box">
-            <h3>🍗 Comida</h3>
-            <p>200g Pollo + Arroz + Verduras</p>
-        </div>
+        <label for="foodProtein">Proteína (g)</label>
+        <input type="number" id="foodProtein" placeholder="Ej: 12">
 
-        <div class="stat-box">
-            <h3>🥩 Cena</h3>
-            <p>Atún + Ensalada + Tortillas</p>
-        </div>
+        <label for="foodCarbs">Carbohidratos (g)</label>
+        <input type="number" id="foodCarbs" placeholder="Ej: 8">
 
-        <div class="stat-box">
-            <h3>💧 Agua</h3>
-            <p>4 Litros diarios</p>
-        </div>
+        <label for="foodFat">Grasas (g)</label>
+        <input type="number" id="foodFat" placeholder="Ej: 5">
 
-<div class="stat-box">
-    <h3>💊 Suplementos</h3>
-    <p>Creatina + Proteína</p>
-</div>
+        <button class="secondary-btn" onclick="addFood()">Agregar alimento</button>
+      </div>
+
+      <div class="stat-box">
+        <h3>📋 Comidas</h3>
+        <div id="foodList"></div>
+      </div>
+
+      <div class="stat-box">
+        <h3>📊 Totales</h3>
+        <p>🔥 <span id="calories">0</span> kcal</p>
+        <p>💪 <span id="protein">0</span> g proteína</p>
+        <p>🍚 <span id="carbs">0</span> g carbohidratos</p>
+        <p>🥑 <span id="fat">0</span> g grasas</p>
+      </div>
     </div>
-</div>
+  </div>
 
-</div>
-</div>
-
-<div class="card">
+  <div class="card">
     <h2>💪 Medidas Corporales</h2>
-
     <div class="stats-grid">
+      <div class="stat-box">
+        <label for="brazoIzq">Brazo izquierdo (cm)</label>
+        <input type="number" id="brazoIzq" value="37" step="0.1">
+      </div>
 
-        <div class="stat-box">
-            <h3>37 cm</h3>
-            <p>Brazo Izquierdo</p>
-        </div>
+      <div class="stat-box">
+        <label for="brazoDer">Brazo derecho (cm)</label>
+        <input type="number" id="brazoDer" value="39" step="0.1">
+      </div>
 
-        <div class="stat-box">
-            <h3>39 cm</h3>
-            <p>Brazo Derecho</p>
-        </div>
+      <div class="stat-box">
+        <label for="pecho">Pecho (cm)</label>
+        <input type="number" id="pecho" value="95" step="0.1">
+      </div>
 
-        <div class="stat-box">
-            <h3>95 cm</h3>
-            <p>Pecho</p>
-        </div>
-
-        <div class="stat-box">
-            <h3>93 cm</h3>
-            <p>Cintura</p>
-        </div>
-
+      <div class="stat-box">
+        <label for="cintura">Cintura (cm)</label>
+        <input type="number" id="cintura" value="93" step="0.1">
+      </div>
     </div>
-</div>
-<div class="card">
-    <h2>📊 Estadísticas</h2>
+  </div>
 
+  <div class="card">
+    <h2>📊 Estadísticas del Día</h2>
     <div class="stats-grid">
+      <div class="stat-box">
+        <label for="diasEntrenados">Días entrenados</label>
+        <input type="number" id="diasEntrenados" value="16">
+      </div>
 
-        <div class="stat-box">
-            <h3>87.5 KG</h3>
-            <p>Peso Actual</p>
-        </div>
+      <div class="stat-box">
+        <label for="tiempoDiario">Tiempo diario</label>
+        <input type="text" id="tiempoDiario" value="1 H">
+      </div>
 
-        <div class="stat-box">
-            <h3>105 KG</h3>
-            <p>Meta</p>
-        </div>
-
-        <div class="stat-box">
-            <h3>03</h3>
-            <p>Días Entrenados</p>
-        </div>
-
-        <div class="stat-box">
-            <h3>1 H</h3>
-            <p>Tiempo Diario</p>
-        </div>
-
+      <div class="stat-box">
+        <label for="notaDia">Notas del día</label>
+        <textarea id="notaDia" placeholder="Escribe observaciones, energía, sensaciones, etc."></textarea>
+      </div>
     </div>
-</div>
-<div class="card">
-    <h2>🎯 Progreso de Peso</h2>
+  </div>
 
-    <progress value="87.5" max="105"></progress>
-
-    <h3>87.5 KG / 105 KG</h3>
-    <p>83% DE LA META</p>
-</div> 
-
-<div class="card">
-    <h2>📈 Historial de Peso</h2>
-
+  <div class="card">
+    <h2>🏋️ Rutina de Pecho</h2>
     <div class="stats-grid">
+      <div class="stat-box">
+        <h3>🔥 Lagartijas</h3>
+        <label for="lagartijasSeries">Series x repeticiones</label>
+        <input type="text" id="lagartijasSeries" value="5 x 50">
 
-    <div class="stat-box">
-        <h3>87.5 KG</h3>
-        <p>04/06/2026</p>
+        <label><input type="checkbox" id="lagartijasOk"> Completado</label>
+
+        <p>
+          <a href="[youtube.com](https://www.youtube.com/results?search_query=lagartijas+tecnica)" target="_blank">
+            Ver ejercicio
+          </a>
+        </p>
+      </div>
+
+      <div class="stat-box">
+        <h3>💪 Cristos</h3>
+
+        <label for="cristosS1">Serie 1</label>
+        <input type="text" id="cristosS1" value="15 repeticiones">
+
+        <label for="cristosS2">Serie 2</label>
+        <input type="text" id="cristosS2" value="12 repeticiones">
+
+        <label for="cristosS3">Serie 3</label>
+        <input type="text" id="cristosS3" value="10 repeticiones">
+
+        <label for="cristosS4">Serie 4</label>
+        <input type="text" id="cristosS4" value="8 repeticiones">
+
+        <label for="cristosS5">Serie 5</label>
+        <input type="text" id="cristosS5" value="6 repeticiones">
+
+        <label><input type="checkbox" id="cristosOk"> Completado</label>
+
+        <p>
+          <a href="[youtube.com](https://www.youtube.com/results?search_query=aperturas+con+mancuernas+pecho)" target="_blank">
+            Ver ejercicio
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>💪 Rutina Completa de Brazo</h2>
+
+    <div class="exercise-item">
+      <label><input type="checkbox" class="brazo-check" data-name="Curl Bíceps"> Curl Bíceps - 4x12</label>
     </div>
 
-    <div class="stat-box">
-        <h3>--</h3>
-        <p>11/06/2026</p>
+    <div class="exercise-item">
+      <label><input type="checkbox" class="brazo-check" data-name="Curl Martillo"> Curl Martillo - 4x12</label>
     </div>
 
-    <div class="stat-box">
-        <h3>--</h3>
-        <p>18/06/2026</p>
+    <div class="exercise-item">
+      <label><input type="checkbox" class="brazo-check" data-name="Curl Concentrado"> Curl Concentrado - 3x10</label>
     </div>
 
-    <div class="stat-box">
-        <h3>--</h3>
-        <p>25/06/2026</p>
+    <div class="exercise-item">
+      <label><input type="checkbox" class="brazo-check" data-name="Curl Invertido"> Curl Invertido - 3x12</label>
     </div>
 
-</div>
-
-<div class="card">
-    <h2>🏋️ Ejercicios del Día</h2>
-
-    <div class="stats-grid">
-
-        <div class="stat-box">
-            <h3>💪 Press Banca</h3>
-            <p>🏋️ 4 x 12</p>
-            <p>⚖️ Peso Actual: 40 kg</p>
-            <p>🏆 PR: 60 kg</p>
-
-            <a href="https://www.youtube.com/results?search_query=press+banca" target="_blank">
-                Ver ejercicio
-            </a>
-
-            <br><br>
-
-            <label>
-                <input type="checkbox">
-                Completado
-            </label>
-        </div>
-
-        <div class="stat-box">
-            <h3>🔥 Curl Bíceps</h3>
-            <p>🏋️ 4 x 12</p>
-            <p>⚖️ Peso Actual: 15 kg</p>
-            <p>🏆 PR: 20 kg</p>
-
-            <a href="https://www.youtube.com/results?search_query=curl+biceps" target="_blank">
-                Ver ejercicio
-            </a>
-
-            <br><br>
-
-            <label>
-                <input type="checkbox">
-                Completado
-            </label>
-        </div>
-
-        <div class="stat-box">
-            <h3>⚡ Press Militar</h3>
-            <p>🏋️ 4 x 12</p>
-            <p>⚖️ Peso Actual: 30 kg</p>
-            <p>🏆 PR: 40 kg</p>
-
-            <a href="https://www.youtube.com/results?search_query=press+militar" target="_blank">
-                Ver ejercicio
-            </a>
-
-            <br><br>
-
-            <label>
-                <input type="checkbox">
-                Completado
-            </label>
-        </div>
-
-        <div class="stat-box">
-            <h3>🏃 Cardio</h3>
-            <p>15 minutos</p>
-
-            <a href="https://www.youtube.com/results?search_query=cardio+15+minutos" target="_blank">
-                Ver ejercicio
-            </a>
-
-            <br><br>
-
-            <label>
-                <input type="checkbox">
-                Completado
-            </label>
-        </div>
-
+    <div class="exercise-item">
+      <label><input type="checkbox" class="brazo-check" data-name="Fondos en Banco"> Fondos en Banco - 4x15</label>
     </div>
-</div>
-   
-   <div class="card">
-    <h2>🎧 Música para Entrenar</h2>
 
-    <div class="stats-grid">
-
-        <div class="stat-box">
-            <h3>💀 Heavy Workout</h3>
-            <p>Metal y Rock para levantar pesado</p>
-
-            <a href="https://music.youtube.com/search?q=heavy+workout" target="_blank">
-                ▶ Escuchar Playlist
-            </a>
-        </div>
-
-        <div class="stat-box">
-            <h3>🔥 Gym Motivation</h3>
-            <p>Hip-Hop motivacional para el gym</p>
-
-            <a href="https://music.youtube.com/search?q=gym+motivation" target="_blank">
-                ▶ Escuchar Playlist
-            </a>
-        </div>
-
-        <div class="stat-box">
-            <h3>⚡ PR Killer</h3>
-            <p>Para romper récords personales</p>
-
-            <a href="https://music.youtube.com/search?q=powerlifting+playlist" target="_blank">
-                ▶ Escuchar Playlist
-            </a>
-        </div>
-
-        <div class="stat-box">
-            <h3>🏋️ Al Fallo</h3>
-            <p>Hardstyle y Phonk pesado</p>
-
-            <a href="https://music.youtube.com/search?q=hardstyle+gym" target="_blank">
-                ▶ Escuchar Playlist
-            </a>
-        </div>
-
+    <div class="exercise-item">
+      <label><input type="checkbox" class="brazo-check" data-name="Extensión Tríceps"> Extensión Tríceps - 4x12</label>
     </div>
-</div> 
 
+    <div class="exercise-item">
+      <label><input type="checkbox" class="brazo-check" data-name="Patada de Tríceps"> Patada de Tríceps - 3x15</label>
+    </div>
+
+    <div class="exercise-item">
+      <label><input type="checkbox" id="rutinaBrazoOk"> Rutina completada</label>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📈 Historial guardado localmente</h2>
+    <p class="small">Cada vez que guardes, se agregará un registro nuevo que luego puedes exportar y abrir en Excel.</p>
+    <div id="historial"></div>
+  </div>
+
+  <footer>
+    © 2026 Christian Rojas Fitness Dashboard™<br>
+    Todos los derechos reservados.
+  </footer>
+
+  <script>
+    const STORAGE_KEY = 'fitnessDashboardData';
+    const FOOD_KEY = 'fitnessDashboardFoods';
+
+    let foods = JSON.parse(localStorage.getItem(FOOD_KEY) || '[]');
+
+    function $(id) {
+      return document.getElementById(id);
+    }
+
+    function valor(id) {
+      const el = $(id);
+      if (!el) return '';
+      if (el.type === 'checkbox') return el.checked;
+      return el.value;
+    }
+
+    function addFood() {
+      const nombre = valor('foodInput').trim();
+      if (!nombre) return;
+
+      const item = {
+        nombre,
+        calories: Number(valor('foodCalories') || 0),
+        protein: Number(valor('foodProtein') || 0),
+        carbs: Number(valor('foodCarbs') || 0),
+        fat: Number(valor('foodFat') || 0)
+      };
+
+      foods.push(item);
+      localStorage.setItem(FOOD_KEY, JSON.stringify(foods));
+      renderFoods();
+
+      ['foodInput', 'foodCalories', 'foodProtein', 'foodCarbs', 'foodFat'].forEach(id => {
+        $(id).value = '';
+      });
+    }
+
+    function removeFood(index) {
+      foods.splice(index, 1);
+      localStorage.setItem(FOOD_KEY, JSON.stringify(foods));
+      renderFoods();
+    }
+
+    function renderFoods() {
+      const foodList = $('foodList');
+      foodList.innerHTML = '';
+
+      let totalCalories = 0;
+      let totalProtein = 0;
+      let totalCarbs = 0;
+      let totalFat = 0;
+
+      foods.forEach((food, index) => {
+        totalCalories += Number(food.calories || 0);
+        totalProtein += Number(food.protein || 0);
+        totalCarbs += Number(food.carbs || 0);
+        totalFat += Number(food.fat || 0);
+
+        const row = document.createElement('div');
+        row.className = 'food-item';
+        row.innerHTML = `
+          <div>
+            <strong>${food.nombre}</strong><br>
+            <span class="small">${food.calories} kcal | ${food.protein}g pro | ${food.carbs}g carb | ${food.fat}g grasa</span>
+          </div>
+          <button onclick="removeFood(${index})">X</button>
+        `;
+        foodList.appendChild(row);
+      });
+
+      $('calories').textContent = totalCalories;
+      $('protein').textContent = totalProtein;
+      $('carbs').textContent = totalCarbs;
+      $('fat').textContent = totalFat;
+    }
+
+    function calcularFaltan() {
+      return (Number(valor('pesoMeta') || 0) - Number(valor('pesoActual') || 0)).toFixed(1);
+    }
+
+    function obtenerDatosFormulario() {
+      const ejerciciosBrazo = Array.from(document.querySelectorAll('.brazo-check')).map(item => ({
+        nombre: item.dataset.name,
+        completado: item.checked
+      }));
+
+      return {
+        fechaRegistro: new Date().toLocaleString('es-MX'),
+        fechaInicio: valor('fechaInicio'),
+        objetivoActual: valor('objetivoActual'),
+        pesoActual: Number(valor('pesoActual') || 0),
+        pesoMeta: Number(valor('pesoMeta') || 0),
+        faltanKg: calcularFaltan(),
+        brazoIzq: Number(valor('brazoIzq') || 0),
+        brazoDer: Number(valor('brazoDer') || 0),
+        pecho: Number(valor('pecho') || 0),
+        cintura: Number(valor('cintura') || 0),
+        diasEntrenados: Number(valor('diasEntrenados') || 0),
+        tiempoDiario: valor('tiempoDiario'),
+        notaDia: valor('notaDia'),
+        calories: Number($('calories').textContent || 0),
+        protein: Number($('protein').textContent || 0),
+        carbs: Number($('carbs').textContent || 0),
+        fat: Number($('fat').textContent || 0),
+        alimentos: foods,
+        lagartijasSeries: valor('lagartijasSeries'),
+        lagartijasOk: valor('lagartijasOk'),
+        cristosS1: valor('cristosS1'),
+        cristosS2: valor('cristosS2'),
+        cristosS3: valor('cristosS3'),
+        cristosS4: valor('cristosS4'),
+        cristosS5: valor('cristosS5'),
+        cristosOk: valor('cristosOk'),
+        rutinaBrazoOk: valor('rutinaBrazoOk'),
+        ejerciciosBrazo
+      };
+    }
+
+    async function guardarEntrenamiento() {
+      const datos = obtenerDatosFormulario();
+      const historial = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      historial.push(datos);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(historial));
+
+      $('estado-guardado').textContent = '✅ Guardado localmente';
+      renderHistorial();
+
+      const scriptUrl = '[script.google.com](https://script.google.com/macros/s/AKfycby7_kIGDQBZvIP5HoDRPnDs4ynXCp9C5ARPQ1-RpRbPGMG3vEAQRiKEidQ3eAfv7eiNrQ/exec)';
+
+      try {
+        await fetch(scriptUrl, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(datos)
+        });
+
+        $('estado-guardado').textContent = '✅ Guardado localmente y enviado a Google Sheets';
+      } catch (error) {
+        console.error(error);
+        $('estado-guardado').textContent = '⚠️ Guardado localmente. Falló el envío externo';
+      }
+    }
+
+    function convertirACSV(registros) {
+      const encabezados = [
+        'fechaRegistro',
+        'fechaInicio',
+        'objetivoActual',
+        'pesoActual',
+        'pesoMeta',
+        'faltanKg',
+        'brazoIzq',
+        'brazoDer',
+        'pecho',
+        'cintura',
+        'diasEntrenados',
+        'tiempoDiario',
+        'notaDia',
+        'calories',
+        'protein',
+        'carbs',
+        'fat',
+        'alimentos',
+        'lagartijasSeries',
+        'lagartijasOk',
+        'cristosS1',
+        'cristosS2',
+        'cristosS3',
+        'cristosS4',
+        'cristosS5',
+        'cristosOk',
+        'rutinaBrazoOk',
+        'ejerciciosBrazo'
+      ];
+
+      const escapeCSV = (value) => {
+        const text = typeof value === 'string' ? value : JSON.stringify(value ?? '');
+        return '"' + String(text).replace(/"/g, '""') + '"';
+      };
+
+      const filas = registros.map(registro =>
+        encabezados.map(key => escapeCSV(registro[key])).join(',')
+      );
+
+      return [encabezados.join(','), ...filas].join('\n');
+    }
+
+    function exportarCSV() {
+      const historial = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+
+      if (!historial.length) {
+        $('estado-guardado').textContent = '⚠️ No hay registros para exportar';
+        return;
+      }
+
+      const csv = convertirACSV(historial);
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+
+      link.href = url;
+      link.download = 'fitness-dashboard-registros.csv';
+      link.click();
+
+      URL.revokeObjectURL(url);
+      $('estado-guardado').textContent = '📄 CSV exportado para Excel';
+    }
+
+    function limpiarRegistros() {
+      localStorage.removeItem(STORAGE_KEY);
+      $('estado-guardado').textContent = '🗑️ Historial local eliminado';
+      renderHistorial();
+    }
+
+    function renderHistorial() {
+      const historial = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      const contenedor = $('historial');
+
+      if (!historial.length) {
+        contenedor.innerHTML = '<p class="small">Todavía no hay entrenamientos guardados.</p>';
+        return;
+      }
+
+      contenedor.innerHTML = historial.slice().reverse().map(item => `
+        <div class="stat-box" style="margin-bottom:10px;">
+          <strong>${item.fechaRegistro}</strong><br>
+          Peso: ${item.pesoActual} kg | Meta: ${item.pesoMeta} kg | Kcal: ${item.calories}<br>
+          Pecho: Lagartijas ${item.lagartijasSeries} | Cristos ${item.cristosS1}, ${item.cristosS2}, ${item.cristosS3}, ${item.cristosS4}, ${item.cristosS5}<br>
+          Nota: ${item.notaDia || 'Sin nota'}
+        </div>
+      `).join('');
+    }
+
+    renderFoods();
+    renderHistorial();
+  </script>
+</body>
+</html>
