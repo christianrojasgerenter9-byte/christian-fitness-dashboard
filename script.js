@@ -10,7 +10,7 @@
     --bg-card-hover: rgba(28, 38, 61, 0.8);
     --border-glass: rgba(255, 255, 255, 0.05);
     --border-glass-focus: rgba(59, 130, 246, 0.4);
-    
+
     --text-primary: #f3f4f6;
     --text-secondary: #9ca3af;
     --text-muted: #6b7280;
